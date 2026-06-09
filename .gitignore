@@ -1,0 +1,25 @@
+# Build artifacts
+bin/
+obj/
+*.dll
+*.exe
+*.pdb
+*.runtimeconfig.json
+
+# IDE
+.vs/
+.vscode/
+*.sln.user
+*.csproj.user
+.DS_Store
+
+# Logs
+*.log
+Logs/
+
+# Configuration (with real credentials - NEVER commit)
+SyslogAlerter.cfg
+
+# OS
+Thumbs.db
+.DS_Store
