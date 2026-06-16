@@ -56,7 +56,6 @@
   }
   .container { max-width: 960px; margin: 0 auto; padding: 0 32px; position: relative; z-index: 1; }
 
-  /* HEADER */
   header { padding: 80px 0 60px; }
   .header-tag {
     font-family: var(--mono); font-size: 11px; color: var(--accent);
@@ -95,7 +94,6 @@
   .flow-node:first-child { clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 0 100%); padding-left: 20px; }
   .flow-node:last-child { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 12px 50%); color: var(--accent2); border-color: rgba(0,255,157,0.3); }
 
-  /* INDEX */
   .index {
     background: var(--bg2); border: 1px solid var(--border);
     border-left: 3px solid var(--accent); border-radius: 4px;
@@ -118,7 +116,6 @@
     color: var(--text3); font-size: 11px; min-width: 20px;
   }
 
-  /* SECTIONS */
   section { padding: 60px 0; border-top: 1px solid var(--border); }
   .section-label { font-family: var(--mono); font-size: 10px; color: var(--text3); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 8px; }
   h2 {
@@ -140,7 +137,6 @@
   }
   p { color: var(--text2); margin-bottom: 16px; }
 
-  /* CODE BLOCKS */
   .code-wrap { margin: 16px 0 24px; position: relative; }
   pre {
     background: var(--bg2); border: 1px solid var(--border);
@@ -158,14 +154,12 @@
     background: rgba(0,212,255,0.1); color: var(--accent);
     padding: 2px 7px; border-radius: 3px; font-size: 12px;
   }
-  .code-footer { display: none; }
   .copy-btn {
     position: absolute; bottom: 8px; right: 8px;
     background: rgba(0,212,255,0.08); border: 1px solid rgba(0,212,255,0.15);
     color: var(--accent); padding: 5px 7px; border-radius: 3px; cursor: pointer;
     transition: background 0.2s, color 0.2s, opacity 0.2s;
     opacity: 0; display: flex; align-items: center;
-    position: absolute;
   }
   .code-wrap:hover .copy-btn { opacity: 1; }
   .copy-btn:hover { background: rgba(0,212,255,0.2); }
@@ -201,7 +195,6 @@
     margin-bottom: 8px; padding-left: 4px;
   }
 
-  /* CARDS */
   .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 24px 0; }
   .card { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 24px; transition: border-color 0.2s, transform 0.2s; }
   .card:hover { border-color: rgba(0,212,255,0.3); transform: translateY(-2px); }
@@ -209,7 +202,6 @@
   .card h4 { font-size: 15px; font-weight: 600; color: #5a6a7a; margin-bottom: 8px; }
   .card p { font-size: 14px; margin: 0; }
 
-  /* STEPS */
   .steps { counter-reset: step; list-style: none; display: flex; flex-direction: column; gap: 12px; }
   .steps li {
     counter-increment: step; display: flex; align-items: flex-start; gap: 16px;
@@ -224,14 +216,12 @@
     flex-shrink: 0; line-height: 1.6;
   }
 
-  /* TABLE */
   table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 14px; }
   th { font-family: var(--mono); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--text3); padding: 10px 16px; text-align: left; border-bottom: 1px solid var(--border); }
   td { padding: 12px 16px; border-bottom: 1px solid rgba(30,42,56,0.5); color: var(--text2); vertical-align: top; }
   td:first-child { font-family: var(--mono); font-size: 13px; color: var(--accent2); white-space: nowrap; }
   tr:hover td { background: rgba(0,212,255,0.02); }
 
-  /* BADGES */
   .badge { display: inline-block; padding: 2px 10px; border-radius: 3px; font-family: var(--mono); font-size: 11px; font-weight: bold; letter-spacing: 1px; }
   .badge-warning  { background: rgba(255,182,39,0.15);  color: var(--warning);  border: 1px solid rgba(255,182,39,0.3); }
   .badge-error    { background: rgba(255,68,68,0.15);   color: var(--error);    border: 1px solid rgba(255,68,68,0.3); }
@@ -239,7 +229,6 @@
   .badge-alert    { background: rgba(255,107,53,0.15);  color: var(--accent3);  border: 1px solid rgba(255,107,53,0.3); }
   .badge-info     { background: rgba(0,212,255,0.1);    color: var(--accent);   border: 1px solid rgba(0,212,255,0.2); }
 
-  /* MSG PREVIEW */
   .msg-preview {
     background: var(--bg2); border: 1px solid var(--border); border-radius: 8px;
     padding: 20px 24px; font-family: var(--mono); font-size: 14px;
@@ -249,7 +238,6 @@
   .msg-sev  { color: var(--critical); }
   .msg-text { color: var(--text2); }
 
-  /* NOTE */
   .note {
     background: rgba(0,212,255,0.05); border: 1px solid rgba(0,212,255,0.15);
     border-left: 3px solid var(--accent); border-radius: 4px;
@@ -257,7 +245,6 @@
   }
   .note strong { color: var(--accent); }
 
-  /* FOOTER */
   footer {
     border-top: 1px solid var(--border); padding: 40px 0;
     display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;
@@ -302,7 +289,7 @@
 <div class="container">
 
   <header>
-    <div class="header-tag">MikroTik · Windows Service · v2.0</div>
+    <div class="header-tag">MikroTik · Windows Service · v2.2</div>
     <h1>
       <span class="line1">Syslog</span>
       <span class="line2">Alert</span>
@@ -323,9 +310,9 @@
         <li><a href="#instalacion" data-num="03">Instalacion</a></li>
         <li><a href="#configuracion" data-num="04">Configuracion</a></li>
         <li><a href="#mikrotik" data-num="05">Configuracion MikroTik</a></li>
-        <li><a href="#administrar" data-num="06">Administrar el servicio</a></li>
+        <li><a href="#administrar" data-num="06">Administrar servicio</a></li>
         <li><a href="#desinstalar" data-num="07">Desinstalacion</a></li>
-        <li><a href="#archivos" data-num="08">Archivos del paquete</a></li>
+        <li><a href="#archivos" data-num="08">Archivos paquete</a></li>
       </ol>
     </div>
   </header>
@@ -333,8 +320,8 @@
   <section id="como-funciona">
     <div class="section-label">01 — Introducción</div>
     <h2><span class="icon">⚡</span>Como funciona</h2>
-    <p>MikroTik puede enviar eventos de su sistema de logging a un servidor remoto via UDP (protocolo syslog estándar). Syslog Alert corre como servicio de Windows, escucha esos paquetes, filtra por severidad y topic, y reenvía las alertas que te interesan al canal configurado.</p>
-    <p>Un solo servidor puede recibir alertas de múltiples routers simultáneamente. Cada mensaje incluye el identity del equipo que lo generó. El sistema incluye un rate limiter anti-flood que suprime alertas repetidas y notifica al administrador cuando detecta un ataque sostenido.</p>
+    <p>MikroTik envia eventos de su sistema de logging a un servidor remoto via UDP (protocolo syslog estándar). Syslog Alert corre como servicio de Windows, escucha esos paquetes, filtra por severidad, topic y palabras clave, y reenvía las alertas que te interesan al canal configurado.</p>
+    <p>Un solo servidor puede recibir alertas de múltiples routers simultáneamente. Cada mensaje incluye el identity del equipo. El sistema incluye un rate limiter anti-flood que suprime alertas repetidas y notifica al administrador cuando detecta un ataque sostenido.</p>
     <div class="msg-preview">
       <span class="msg-host">[tuIdentity]</span>
       <span class="msg-sev">[CRITICAL]</span>
@@ -359,7 +346,7 @@
       <div class="card">
         <div class="card-num">03</div>
         <h4>Puerto UDP 514</h4>
-        <p>Abierto en el firewall de Windows. El instalador lo configura automáticamente.</p>
+        <p>Abierto en el firewall. El instalador lo configura automáticamente.</p>
       </div>
       <div class="card">
         <div class="card-num">04</div>
@@ -375,12 +362,12 @@
     <ol class="steps">
       <li>Descomprimí el paquete en cualquier carpeta</li>
       <li>Ejecutá <code>install.cmd</code> como Administrador</li>
-      <li>El instalador copia los archivos, crea la regla de firewall y registra el servicio</li>
-      <li>Al finalizar se ofrece abrir la documentación y el archivo de configuración</li>
+      <li>El instalador copia archivos, crea regla de firewall y registra el servicio</li>
+      <li>Al finalizar se ofrece abrir la documentación y archivo de configuración</li>
       <li>Editá <code>SyslogAlerter.cfg</code> con tus datos de Telegram y/o WhatsApp</li>
       <li>Reiniciá el servicio para aplicar la configuración</li>
     </ol>
-    <div class="note"><strong>Nota:</strong> El servicio queda corriendo en segundo plano y arranca automáticamente con Windows.</div>
+    <div class="note"><strong>Nota:</strong> El servicio queda corriendo en background y arranca automáticamente con Windows.</div>
   </section>
 
   <section id="configuracion">
@@ -392,28 +379,26 @@
 Puerto=514
 
 # --- Severidades a alertar (separadas por coma) ---
-# Opciones: debug, info, notice, warning, error, critical, alert, emergency
 Severidades=warning,error,critical,alert,emergency
 
 # --- Topics a ignorar (separados por coma) ---
 TopicsIgnorar=bfd,ospf,rip,meter
 
+# --- Palabras clave a ignorar en mensajes (separadas por coma) ---
+# Si el mensaje contiene cualquiera de estas palabras, se filtra
+MensajesIgnorar=possible SYN flooding,possible port scan,possible IP spoofing
+
 # --- Telegram ---
 # true = activado | false = desactivado
-TelegramEnabled=true
-TelegramToken=TOKEN_DEL_BOT
-TelegramChatId=ID_DEL_CHAT
+TelegramEnabled=false
+TelegramToken=TU_BOT_TOKEN_AQUI
+TelegramChatId=TU_CHAT_ID_AQUI
 
 # --- WhatsApp (textmebot) ---
 # true = activado | false = desactivado
 WhatsAppEnabled=false
 WhatsAppPhone=+549XXXXXXXXXX
-WhatsAppApiKey=API_KEY</code></pre>
-    </div>
-    <div class="code-footer">
-      <button class="copy-btn" onclick="copyCode(this)">
-        <span class="tooltip">Copiar al portapapeles</span>
-      </button>
+WhatsAppApiKey=TU_API_KEY_AQUI</code></pre><button class="copy-btn" onclick="copyCode(this)"><span class="tooltip">Copiar</span></button>
     </div>
 
     <h3>Severidades disponibles</h3>
@@ -428,6 +413,12 @@ WhatsAppApiKey=API_KEY</code></pre>
       <span class="badge badge-critical">EMERGENCY</span>
     </p>
 
+    <h3>Filtro de palabras clave (v2.2+)</h3>
+    <p>Ignorá mensajes que contengan ciertas palabras sin enviar alertas. Caso insensible.</p>
+    <div class="code-wrap">
+      <pre data-lang="cfg"><code>MensajesIgnorar=possible SYN flooding,possible port scan,brute force attempt</code></pre><button class="copy-btn" onclick="copyCode(this)"><span class="tooltip">Copiar</span></button>
+    </div>
+
     <h3>Como obtener el Token de Telegram</h3>
     <ol class="steps">
       <li>Abrí Telegram y buscá <code>@BotFather</code></li>
@@ -441,39 +432,29 @@ WhatsAppApiKey=API_KEY</code></pre>
       <li>Enviá cualquier mensaje</li>
       <li>Te responde con tu ChatId — copialo en <code>TelegramChatId</code></li>
     </ol>
-
-    <h3>Como obtener la ApiKey de WhatsApp (textmebot)</h3>
-    <ol class="steps">
-      <li>Entrá a <code>https://www.textmebot.com</code></li>
-      <li>Registrate con tu número de WhatsApp</li>
-      <li>Te asignan una ApiKey — copiala en <code>WhatsAppApiKey</code></li>
-    </ol>
   </section>
 
   <section id="mikrotik">
     <div class="section-label">05 — MikroTik</div>
     <h2><span class="icon">🔧</span>Configuracion en MikroTik</h2>
-    <p>Ejecutá los siguientes comandos en orden desde la terminal de MikroTik. Reemplazá los valores indicados antes de ejecutarlos.</p>
+    <p>Ejecutá los comandos en orden desde la terminal de MikroTik. Reemplazá los valores indicados.</p>
 
     <h3>1. Configurar el identity del equipo</h3>
-    <p>El identity es el nombre que aparecerá en cada alerta para identificar el equipo. Configuralo antes de continuar.</p>
     <div class="code-wrap">
-      <pre data-lang="mikrotik"><code>/system identity set name=tuIdentity</code><button class="copy-btn" onclick="copyCode(this)"><span class="tooltip">Copiar</span></button></pre>
+      <pre data-lang="mikrotik"><code>/system identity set name=tuIdentity</code></pre><button class="copy-btn" onclick="copyCode(this)"><span class="tooltip">Copiar</span></button>
     </div>
-    <p class="code-note">⚠ Reemplazá <strong>tuIdentity</strong> por el nombre descriptivo de tu equipo (ej: Router-Oficina, MikroTik-Sucursal)</p>
+    <p class="code-note">⚠ Reemplazá <strong>tuIdentity</strong> por el nombre de tu equipo</p>
 
     <h3>2. Crear la logging action</h3>
-    <p>Reemplazá <code>IP.O.DOMINIO</code> por la IP pública o dominio DDNS del servidor Windows.</p>
     <div class="code-wrap">
       <pre data-lang="mikrotik"><code>/system/logging/action
-add name=syslogAlert target=remote remote=IP.O.DOMINIO remote-port=514 remote-log-format=default</code><button class="copy-btn" onclick="copyCode(this)"><span class="tooltip">Copiar</span></button></pre>
+add name=syslogAlert target=remote remote=IP.O.DOMINIO remote-port=514 remote-log-format=default</code></pre><button class="copy-btn" onclick="copyCode(this)"><span class="tooltip">Copiar</span></button>
     </div>
-    <p class="code-note">⚠ Reemplazá <strong>IP.O.DOMINIO</strong> por la IP o dominio de tu servidor</p>
+    <p class="code-note">⚠ Reemplazá <strong>IP.O.DOMINIO</strong> por la IP del servidor</p>
 
-    <h3>3. Configurar el prefix con el identity</h3>
-    <p>El prefix incluye automáticamente el identity del equipo en cada mensaje enviado al servidor.</p>
+    <h3>3. Configurar el prefix</h3>
     <div class="code-wrap">
-      <pre data-lang="mikrotik"><code>/system/logging set [find action=syslogAlert] prefix=[/system identity get name]</code><button class="copy-btn" onclick="copyCode(this)"><span class="tooltip">Copiar</span></button></pre>
+      <pre data-lang="mikrotik"><code>/system/logging set [find action=syslogAlert] prefix=[/system identity get name]</code></pre><button class="copy-btn" onclick="copyCode(this)"><span class="tooltip">Copiar</span></button>
     </div>
 
     <h3>4. Crear las logging rules</h3>
@@ -481,11 +462,11 @@ add name=syslogAlert target=remote remote=IP.O.DOMINIO remote-port=514 remote-lo
       <pre data-lang="mikrotik"><code>/system/logging
 add topics=system,warning  action=syslogAlert
 add topics=system,error    action=syslogAlert
-add topics=firewall        action=syslogAlert</code><button class="copy-btn" onclick="copyCode(this)"><span class="tooltip">Copiar</span></button></pre>
+add topics=firewall        action=syslogAlert</code></pre><button class="copy-btn" onclick="copyCode(this)"><span class="tooltip">Copiar</span></button>
     </div>
 
-    <h3>Configuración completa en un solo bloque</h3>
-    <p>Copiá el bloque completo y pegalo en la terminal de MikroTik. Asegurate de reemplazar <strong>tuIdentity</strong> e <strong>IP.O.DOMINIO</strong> antes de ejecutarlo.</p>
+    <h3>Bloque completo para copiar y pegar</h3>
+    <p>Reemplazá <strong>tuIdentity</strong> e <strong>IP.O.DOMINIO</strong> antes de ejecutar.</p>
     <div class="code-wrap">
       <pre data-lang="mikrotik"><code id="mikrotik-all">/system identity set name=tuIdentity
 
@@ -497,10 +478,9 @@ add name=syslogAlert target=remote remote=IP.O.DOMINIO remote-port=514 remote-lo
 /system/logging
 add topics=system,warning  action=syslogAlert
 add topics=system,error    action=syslogAlert
-add topics=firewall        action=syslogAlert</code></pre>
+add topics=firewall        action=syslogAlert</code></pre><button class="copy-btn-mega" onclick="copyMega(this)"></button>
     </div>
-    <button class="copy-btn-mega" onclick="copyMega(this)"></button>
-    <p class="mega-note">⚠ Reemplazá <strong>tuIdentity</strong> e <strong>IP.O.DOMINIO</strong> antes de ejecutar</p>
+    <p class="mega-note">⚠ Personaliza antes de ejecutar</p>
 
     <h3>Topics disponibles</h3>
     <table>
@@ -510,17 +490,10 @@ add topics=firewall        action=syslogAlert</code></pre>
       <tr><td>dhcp</td><td>Asignacion y renovacion de IPs</td></tr>
       <tr><td>ipsec</td><td>Eventos de VPN IPSec</td></tr>
       <tr><td>ppp</td><td>Conexiones PPP / PPPoE</td></tr>
-      <tr><td>wireguard</td><td>Eventos de VPN WireGuard</td></tr>
-      <tr><td>caps</td><td>CAPsMAN y puntos de acceso</td></tr>
     </table>
 
-    <h3>5. Verificar que funciona</h3>
-    <p>Intentá conectarte al router con usuario y contraseña incorrectos via Winbox o SSH desde otra PC. Deberías recibir una alerta como esta:</p>
-    <div class="msg-preview">
-      <span class="msg-host">[tuIdentity]</span>
-      <span class="msg-sev">[CRITICAL]</span>
-      <span class="msg-text">login failure for user admin from 1.2.3.4 via winbox</span>
-    </div>
+    <h3>Verificar que funciona</h3>
+    <p>Intentá conectarte al router con usuario/clave incorrectos. Deberías recibir una alerta.</p>
   </section>
 
   <section id="administrar">
@@ -537,31 +510,15 @@ Stop-Service SyslogAlert
 # Iniciar
 Start-Service SyslogAlert
 
-# Reiniciar (necesario despues de editar el .cfg)
-Restart-Service SyslogAlert</code><button class="copy-btn" onclick="copyCode(this)"><span class="tooltip">Copiar</span></button></pre>
+# Reiniciar (necesario después de editar .cfg)
+Restart-Service SyslogAlert</code></pre><button class="copy-btn" onclick="copyCode(this)"><span class="tooltip">Copiar</span></button>
     </div>
-
-    <h3>Cuando reiniciar el servicio</h3>
-    <ul class="steps">
-      <li>Despues de editar el archivo <code>SyslogAlerter.cfg</code></li>
-      <li>Si las alertas dejan de llegar</li>
-      <li>Despues de actualizar el ejecutable</li>
-    </ul>
-
-    <h3>Agregar otro MikroTik</h3>
-    <p>No requiere ningún cambio en el servidor. Simplemente configurá la logging action en el nuevo router apuntando al mismo servidor. Las alertas llegan identificadas con el identity de cada equipo.</p>
   </section>
 
   <section id="desinstalar">
     <div class="section-label">07 — Desinstalacion</div>
     <h2><span class="icon">🗑</span>Desinstalar</h2>
-    <p>Ejecutá <code>uninstall.cmd</code> como Administrador. El desinstalador:</p>
-    <ol class="steps">
-      <li>Detiene el servicio de Windows</li>
-      <li>Elimina el servicio de Windows</li>
-      <li>Elimina la regla de firewall UDP 514</li>
-      <li>Elimina los archivos de <code>C:\Program Files\SyslogAlert</code></li>
-    </ol>
+    <p>Ejecutá <code>uninstall.cmd</code> como Administrador. El desinstalador elimina el servicio, firewall y archivos.</p>
   </section>
 
   <section id="archivos">
@@ -569,18 +526,18 @@ Restart-Service SyslogAlert</code><button class="copy-btn" onclick="copyCode(thi
     <h2><span class="icon">📦</span>Archivos del paquete</h2>
     <table>
       <tr><th>Archivo</th><th>Descripcion</th></tr>
-      <tr><td>SyslogAlert.exe</td><td>Aplicacion principal (autocontenida, no requiere .NET)</td></tr>
-      <tr><td>SyslogAlerter.cfg</td><td>Configuracion editable — Telegram, WhatsApp, filtros</td></tr>
-      <tr><td>nssm.exe</td><td>Gestor de servicios de Windows (incluido, no requiere instalacion)</td></tr>
-      <tr><td>install.cmd</td><td>Instalador — copia archivos, firewall y servicio</td></tr>
-      <tr><td>uninstall.cmd</td><td>Desinstalador completo</td></tr>
+      <tr><td>Program.cs</td><td>Código fuente C# .NET (v2.2)</td></tr>
+      <tr><td>SyslogAlerter.cfg</td><td>Configuracion editable con ejemplos</td></tr>
+      <tr><td>nssm.exe</td><td>Gestor de servicios Windows (incluido)</td></tr>
+      <tr><td>install.cmd</td><td>Instalador automático</td></tr>
+      <tr><td>uninstall.cmd</td><td>Desinstalador</td></tr>
       <tr><td>README.html</td><td>Esta documentacion</td></tr>
-      <tr><td>README.txt</td><td>Documentacion en texto plano</td></tr>
+      <tr><td>README.md</td><td>Markdown para GitHub</td></tr>
+      <tr><td>LICENSE</td><td>MIT License</td></tr>
     </table>
 
     <div class="note">
-      <strong>Formato syslog:</strong> El formato recomendado en MikroTik es <code>default</code>. El formato <code>bsd-syslog</code> también es compatible, pero con <code>default</code> el parseo es más preciso y confiable. Usá <code>bsd-syslog</code> solo si necesitás ver el mensaje RAW completo para debug.<br><br>
-      <strong>Configuracion:</strong> El archivo <code>.cfg</code> en <code>C:\Program Files\SyslogAlert\</code> es el que usa el servicio. Si editás el <code>.cfg</code> del paquete original no afecta la instalacion existente. Reiniciá el servicio después de cada cambio.
+      <strong>v2.2 — Parse Logic Fix:</strong> Si MikroTik no envía el prefix (identity), ahora usa <code>hostname=unknown</code> y aplica todos los filtros normalmente. Las versiones anteriores enviaban PARSE-ERROR sin filtrar.
     </div>
   </section>
 
@@ -596,7 +553,7 @@ Restart-Service SyslogAlert</code><button class="copy-btn" onclick="copyCode(thi
         </div>
       </div>
     </div>
-    <div class="version-badge">v2.0</div>
+    <div class="version-badge">v2.2</div>
   </footer>
 
 </div>
@@ -606,7 +563,7 @@ const COPY_ICON = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" st
 const CHECK_ICON = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`;
 
 function copyCode(btn) {
-  const pre = btn.closest('pre');
+  const pre = btn.previousElementSibling;
   const text = pre.querySelector('code').innerText;
   navigator.clipboard.writeText(text).then(() => {
     btn.innerHTML = CHECK_ICON;
@@ -632,9 +589,7 @@ function copyMega(btn) {
 
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.copy-btn').forEach(btn => {
-    const tooltip = btn.querySelector('.tooltip');
     btn.innerHTML = COPY_ICON;
-    if (tooltip) btn.appendChild(tooltip);
   });
   const mega = document.querySelector('.copy-btn-mega');
   if (mega) mega.innerHTML = COPY_ICON + ' COPIAR CONFIGURACIÓN COMPLETA DE MIKROTIK';
