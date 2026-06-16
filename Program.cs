@@ -9,10 +9,10 @@ using System.Collections.Generic;
 using System.Collections.Concurrent;
 
 // ============================================================
-//  SYSLOG ALERT - v2.0
+//  SYSLOG ALERT - v2.1
 //  Descripcion: Recibe syslog de MikroTik y reenvía a Telegram/WhatsApp
 //  Soporta formato BSD-syslog y default
-//  Incluye rate limiter anti-flood y debug detallado
+//  Incluye rate limiter anti-flood y filtros de palabras clave
 // ============================================================
 // ============================================================
 //  Desarrollado por DMZ Sistemas — Brian Tierno
@@ -42,6 +42,7 @@ foreach (string linea in File.ReadAllLines(configPath))
 int puerto = int.TryParse(config.GetValueOrDefault("Puerto", "514"), out int p) ? p : 514;
 string[] severidadesAlertar = config.GetValueOrDefault("Severidades", "warning,error,critical,alert,emergency").Split(',');
 string[] topicsIgnorar = config.GetValueOrDefault("TopicsIgnorar", "").Split(',');
+string[] mensajesIgnorar = config.GetValueOrDefault("MensajesIgnorar", "").Split(',');
 
 bool telegramEnabled = config.GetValueOrDefault("TelegramEnabled", "false").ToLower() == "true";
 string telegramToken = config.GetValueOrDefault("TelegramToken", "");
@@ -63,7 +64,9 @@ var endpoint = new IPEndPoint(IPAddress.Any, puerto);
 
 Log("INFO", $"Escuchando syslog en UDP:{puerto}");
 Log("INFO", $"Telegram: {(telegramEnabled ? "activo" : "inactivo")} | WhatsApp: {(whatsappEnabled ? "activo" : "inactivo")}");
-Log("INFO", $"Severidades: {string.Join(",", severidadesAlertar)} | Topics ignorados: {string.Join(",", topicsIgnorar)}");
+Log("INFO", $"Severidades: {string.Join(",", severidadesAlertar)}");
+Log("INFO", $"Topics ignorados: {string.Join(",", topicsIgnorar)}");
+Log("INFO", $"Mensajes ignorados: {string.Join(" | ", mensajesIgnorar.Where(m => !string.IsNullOrEmpty(m.Trim())))}");
 Console.WriteLine(new string('-', 60));
 
 while (true)
@@ -79,39 +82,54 @@ while (true)
         string severidad = "";
         string hostname = "";
         string mensaje = raw;
-        bool parseFallido = false;
+        bool parseWarning = false;
 
         try
         {
             if (raw.StartsWith("<"))
             {
+                // --- Formato BSD-syslog ---
                 int inicio = raw.IndexOf('<');
                 int fin = raw.IndexOf('>');
-                int prioridad = int.Parse(raw[(inicio + 1)..fin]);
-                int sevNum = prioridad % 8;
-                severidad = sevNum switch
+                if (inicio >= 0 && fin > inicio)
                 {
-                    0 => "emergency",
-                    1 => "alert",
-                    2 => "critical",
-                    3 => "error",
-                    4 => "warning",
-                    5 => "notice",
-                    6 => "info",
-                    7 => "debug",
-                    _ => "unknown"
-                };
-                string resto = raw[(fin + 1)..].Trim();
-                string[] partes = resto.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-                if (partes.Length >= 4)
-                {
-                    hostname = partes[3];
-                    mensaje = string.Join(" ", partes[4..]);
+                    int prioridad = int.Parse(raw[(inicio + 1)..fin]);
+                    int sevNum = prioridad % 8;
+                    severidad = sevNum switch
+                    {
+                        0 => "emergency",
+                        1 => "alert",
+                        2 => "critical",
+                        3 => "error",
+                        4 => "warning",
+                        5 => "notice",
+                        6 => "info",
+                        7 => "debug",
+                        _ => "unknown"
+                    };
+                    string resto = raw[(fin + 1)..].Trim();
+                    string[] partes = resto.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                    if (partes.Length >= 4)
+                    {
+                        hostname = partes[3];
+                        mensaje = string.Join(" ", partes[4..]);
+                    }
+                    else
+                    {
+                        hostname = "unknown";
+                        parseWarning = true;
+                    }
                 }
-                else parseFallido = true;
+                else
+                {
+                    severidad = "unknown";
+                    hostname = "unknown";
+                    parseWarning = true;
+                }
             }
             else
             {
+                // --- Formato default ---
                 int espacio = raw.IndexOf(' ');
                 if (espacio > 0)
                 {
@@ -127,28 +145,38 @@ while (true)
                         hostname = resto[..dospuntos].Trim();
                         mensaje = resto[(dospuntos + 1)..].Trim();
                     }
-                    else parseFallido = true;
+                    else
+                    {
+                        hostname = "unknown";
+                        parseWarning = true;
+                    }
                 }
-                else parseFallido = true;
+                else
+                {
+                    severidad = "unknown";
+                    hostname = "unknown";
+                    parseWarning = true;
+                }
             }
         }
         catch (Exception ex)
         {
             Log("ERROR", $"Excepcion en parser: {ex.Message}");
-            parseFallido = true;
+            severidad = "unknown";
+            hostname = "unknown";
+            parseWarning = true;
         }
 
-        if (parseFallido)
-        {
-            Log("WARN", $"PARSE-ERROR — enviando raw sin filtros: {raw}");
-            await EnviarAlertas(http, telegramEnabled, telegramToken, telegramChatId,
-                whatsappEnabled, alertPhone, alertApiKey,
-                Uri.EscapeDataString($"[PARSE-ERROR] {raw}"));
-            return;
-        }
+        // Valores por defecto si quedaron vacíos
+        if (string.IsNullOrEmpty(severidad)) severidad = "unknown";
+        if (string.IsNullOrEmpty(hostname)) hostname = "unknown";
 
-        Log("DEBUG", $"PARSE OK — hostname={hostname} severidad={severidad} mensaje={mensaje.Trim()}");
+        if (parseWarning)
+            Log("DEBUG", $"PARSE WARNING — hostname={hostname} severidad={severidad} (valores por defecto)");
+        else
+            Log("DEBUG", $"PARSE OK — hostname={hostname} severidad={severidad} mensaje={mensaje.Trim()}");
 
+        // --- Filtro topics ignorados ---
         bool ignorar = false;
         foreach (string t in topicsIgnorar)
             if (!string.IsNullOrEmpty(t) && mensaje.ToLower().Contains(t.Trim())) { ignorar = true; break; }
@@ -159,6 +187,30 @@ while (true)
             return;
         }
 
+        // --- Filtro palabras clave en el mensaje ---
+        bool palabraEncontrada = false;
+        foreach (string palabra in mensajesIgnorar)
+        {
+            if (!string.IsNullOrEmpty(palabra))
+            {
+                string palabraLimpia = palabra.Trim().ToLower();
+                if (mensaje.ToLower().Contains(palabraLimpia))
+                {
+                    Log("DEBUG", $"COINCIDENCIA — '{palabraLimpia}' encontrado en mensaje");
+                    palabraEncontrada = true;
+                    ignorar = true;
+                    break;
+                }
+            }
+        }
+
+        if (ignorar)
+        {
+            Log("DEBUG", $"FILTRADO — mensaje contiene palabra clave ignorada: {mensaje.Trim()}");
+            return;
+        }
+
+        // --- Filtro severidad ---
         bool alertar = false;
         foreach (string sev in severidadesAlertar)
             if (severidad == sev.Trim().ToLower()) { alertar = true; break; }

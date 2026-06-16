@@ -11,6 +11,7 @@ MikroTik → UDP Syslog → Syslog Alert (Windows Service) → Telegram / WhatsA
 - ✅ **Recibe UDP syslog** de múltiples MikroTik simultáneamente
 - ✅ **Filtra por severidad** (warning, error, critical, alert, emergency)
 - ✅ **Filtra por topic** (system, firewall, dhcp, ipsec, etc.)
+- ✅ **Filtra por palabras clave** — ignorar SYN flooding, port scans, etc.
 - ✅ **Rate limiter anti-flood** — suprime alertas repetidas
 - ✅ **Modo urgente** — detecta ataques sostenidos y alerta cada 15 min
 - ✅ **Soporta Telegram y WhatsApp** simultáneamente
@@ -53,7 +54,7 @@ Lee **README.html** para instrucciones completas de instalación, configuración
 
 ```
 Mikrotik-SysLog-Alert/
-├── Program.cs               C# .NET source code (v2.0)
+├── Program.cs               C# .NET source code (v2.2)
 ├── SyslogAlerter.cfg        Configuration file (example values)
 ├── install.cmd              Windows installer script
 ├── uninstall.cmd            Windows uninstaller script
@@ -101,12 +102,34 @@ TelegramChatId=CHAT_ID
 WhatsAppEnabled=false
 WhatsAppPhone=+549XXXXXXXXXX
 WhatsAppApiKey=API_KEY
+
+# Palabras clave a ignorar (separadas por coma)
+MensajesIgnorar=possible SYN flooding,possible port scan,possible IP spoofing
 ```
 
 Reiniciá el servicio para aplicar cambios:
 
 ```powershell
 Restart-Service SyslogAlert
+```
+
+## Filtros de Palabras Clave
+
+Ignorá mensajes que contengan ciertas palabras sin enviar alertas:
+
+```ini
+MensajesIgnorar=possible SYN flooding,port scan attempt,brute force
+```
+
+Caso insensible. Si el mensaje contiene cualquiera de estas palabras, se filtra automáticamente.
+
+**Ejemplos útiles:**
+```
+possible SYN flooding
+possible port scan
+possible IP spoofing
+brute force attempt
+invalid SSL certificate
 ```
 
 ## Rate Limiter (Anti-Flood)
@@ -134,6 +157,20 @@ Configurá en MikroTik:
 ```
 /system/logging/action
 add ... remote-log-format=default
+```
+
+## Parse Logic v2.2
+
+Si MikroTik no envia el `prefix` (identity del equipo):
+
+- **v2.1 y anteriores**: Enviaba alert de PARSE-ERROR sin filtrar
+- **v2.2**: Usa `hostname=unknown` y aplica filtros normales (silencioso)
+
+**Ejemplo:**
+```
+Raw: system,error: login failure     ← sin hostname
+Parse: hostname=unknown, severidad=error, mensaje=login failure
+Aplica: filtros, rate limiter, etc.
 ```
 
 ## Troubleshooting
@@ -174,7 +211,24 @@ O ejecutá el exe directamente para ver el debug en consola.
 3. Reiniciá el servicio: `Restart-Service SyslogAlert`
 4. Revisa la consola del debug (errores HTTP)
 
+### Los filtros no funcionan
+
+1. Verificá que estás usando **v2.2** o superior
+2. Edita el .cfg y reinicia: `Restart-Service SyslogAlert`
+3. Revisa en consola: `[DEBUG] COINCIDENCIA — 'palabra' encontrado en mensaje`
+4. Confirmá que la palabra está exactamente como aparece en el mensaje (case-insensitive)
+
 ## Changelog
+
+### v2.2
+- **Fix crítico**: Parse logic - usa defaults en lugar de enviar errors
+- Rate limiter funciona incluso sin hostname
+- Filtros se aplican siempre (incluso con parse parcial)
+- Better debug para MensajesIgnorar
+
+### v2.1
+- Filtro de palabras clave (MensajesIgnorar)
+- Debug detallado para filtros
 
 ### v2.0
 - Rate limiter anti-flood con modo urgente
